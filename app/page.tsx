@@ -32,24 +32,25 @@ export default async function HomePage() {
   const projects = await getProjects();
 
   return (
-    <>
-      <Header />
-      <main className="mx-auto max-w-6xl space-y-12 px-6 py-12">
-        <section>
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold tracking-tight text-white">
-              Prototypes
-            </h2>
-            <p className="mt-1.5 text-sm text-white/40">
-              Click any card to try it live — right here.
-            </p>
-          </div>
-          <PrototypeGrid projects={projects} />
-        </section>
+    <div style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
+      <Header projectCount={projects.length} />
 
-        <EmailCapture />
-      </main>
+      {/* Section label */}
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 12, margin: '48px 0 24px',
+      }}>
+        <span style={{
+          fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-muted)',
+          letterSpacing: '0.15em', textTransform: 'uppercase' as const,
+        }}>
+          Prototypes
+        </span>
+        <div style={{ flex: 1, height: 1, background: 'var(--color-border)' }} />
+      </div>
+
+      <PrototypeGrid projects={projects} />
+      <EmailCapture />
       <Footer />
-    </>
+    </div>
   );
 }

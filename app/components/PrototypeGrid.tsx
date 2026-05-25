@@ -11,35 +11,35 @@ interface PrototypeGridProps {
 }
 
 export default function PrototypeGrid({ projects }: PrototypeGridProps) {
-  const [activeCategory, setActiveCategory] = useState<ProjectCategory | null>(null);
+  const [activeCategory, setActiveCategory] = useState<ProjectCategory | 'all'>('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  const filtered = activeCategory
-    ? projects.filter((p) => p.category === activeCategory)
-    : projects;
+  const filtered = activeCategory === 'all'
+    ? projects
+    : projects.filter((p) => p.category === activeCategory);
 
   return (
-    <section className="space-y-8">
-      <FilterBar
-        activeCategory={activeCategory}
-        onFilterChange={setActiveCategory}
-      />
+    <section>
+      <FilterBar activeCategory={activeCategory} onFilterChange={setActiveCategory} />
 
       {filtered.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-white/[0.08] py-20 text-center">
-          <span className="text-4xl">🔍</span>
-          <p className="mt-4 text-sm text-white/30">
-            No prototypes in this category yet.
-          </p>
+        <div style={{
+          textAlign: 'center', padding: '60px 0',
+          fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--color-muted)',
+        }}>
+          No prototypes in this category yet.
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((project, i) => (
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+          gap: 20,
+        }}>
+          {filtered.map((project) => (
             <PrototypeCard
               key={project.id}
               project={project}
               onOpen={setSelectedProject}
-              index={i}
             />
           ))}
         </div>

@@ -1,53 +1,37 @@
 'use client';
 
-import { PROJECT_CATEGORIES, type ProjectCategory } from '../lib/types';
-import { cn } from '../lib/utils';
+import { PROJECT_CATEGORIES } from '../lib/types';
+import type { ProjectCategory } from '../lib/types';
 
 interface FilterBarProps {
-  activeCategory: ProjectCategory | null;
-  onFilterChange: (category: ProjectCategory | null) => void;
+  activeCategory: ProjectCategory | 'all';
+  onFilterChange: (category: ProjectCategory | 'all') => void;
 }
-
-const categoryLabels: Record<ProjectCategory, string> = {
-  game: '🎮 Games',
-  'legal-ai': '⚖️ Legal AI',
-  community: '👥 Community',
-  ops: '⚙️ Ops',
-  music: '🎵 Music',
-  tool: '🛠 Tools',
-};
 
 export default function FilterBar({ activeCategory, onFilterChange }: FilterBarProps) {
   return (
-    <nav className="flex flex-wrap gap-2" aria-label="Filter by category">
-      <button
-        className={cn(
-          'rounded-lg border px-3 py-1.5 text-sm font-medium transition-all duration-200',
-          activeCategory === null
-            ? 'border-white/20 bg-white/10 text-white'
-            : 'border-white/[0.06] bg-transparent text-white/40 hover:border-white/10 hover:text-white/70'
-        )}
-        onClick={() => onFilterChange(null)}
-        aria-pressed={activeCategory === null}
-      >
-        All
-      </button>
-
-      {PROJECT_CATEGORIES.map((category) => (
+    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' as const, marginBottom: 28 }}>
+      {PROJECT_CATEGORIES.map(({ value, label }) => (
         <button
-          key={category}
-          className={cn(
-            'rounded-lg border px-3 py-1.5 text-sm font-medium transition-all duration-200',
-            activeCategory === category
-              ? 'border-white/20 bg-white/10 text-white'
-              : 'border-white/[0.06] bg-transparent text-white/40 hover:border-white/10 hover:text-white/70'
-          )}
-          onClick={() => onFilterChange(category)}
-          aria-pressed={activeCategory === category}
+          key={value}
+          onClick={() => onFilterChange(value)}
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 11,
+            padding: '6px 14px',
+            borderRadius: 6,
+            border: `1px solid ${activeCategory === value ? 'var(--color-accent)' : 'var(--color-border)'}`,
+            background: activeCategory === value ? 'var(--color-accent)' : 'transparent',
+            color: activeCategory === value ? '#000' : 'var(--color-muted)',
+            fontWeight: activeCategory === value ? 700 : 400,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            letterSpacing: '0.05em',
+          }}
         >
-          {categoryLabels[category]}
+          {label}
         </button>
       ))}
-    </nav>
+    </div>
   );
 }

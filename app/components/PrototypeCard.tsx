@@ -1,93 +1,123 @@
 'use client';
 
-import { ExternalLink } from 'lucide-react';
 import type { Project } from '../lib/types';
-import { cn } from '../lib/utils';
 
 interface PrototypeCardProps {
   project: Project;
   onOpen: (project: Project) => void;
-  index: number;
 }
 
-export default function PrototypeCard({ project, onOpen, index }: PrototypeCardProps) {
-  const formattedDate = new Date(project.created_at).toLocaleDateString('en-US', {
-    month: 'short',
-    year: 'numeric',
-  });
+const defaultGradients = [
+  'linear-gradient(135deg, #0d1b2a 0%, #1a0533 50%, #2d0558 100%)',
+  'linear-gradient(135deg, #001a0d 0%, #003322 50%, #005533 100%)',
+  'linear-gradient(135deg, #1a0a00 0%, #3d1a00 50%, #662d00 100%)',
+  'linear-gradient(135deg, #0a001a 0%, #1a003d 50%, #2d0066 100%)',
+  'linear-gradient(135deg, #001a1a 0%, #00333d 50%, #005566 100%)',
+  'linear-gradient(135deg, #1a1a00 0%, #3d3d00 50%, #666600 100%)',
+];
+
+const tagColors: Record<string, { bg: string; border: string; color: string }> = {
+  default: { bg: 'rgba(0,255,157,0.08)', border: 'rgba(0,255,157,0.25)', color: 'var(--color-accent)' },
+  purple: { bg: 'rgba(124,58,237,0.1)', border: 'rgba(124,58,237,0.3)', color: '#a78bfa' },
+  amber: { bg: 'rgba(245,158,11,0.1)', border: 'rgba(245,158,11,0.3)', color: 'var(--color-accent3)' },
+};
+
+function getTagStyle(index: number) {
+  if (index === 1) return tagColors.purple;
+  if (index === 2) return tagColors.amber;
+  return tagColors.default;
+}
+
+export default function PrototypeCard({ project, onOpen }: PrototypeCardProps) {
+  const gradient = project.thumb_gradient || defaultGradients[project.sort_order % defaultGradients.length];
 
   return (
     <article
-      className={cn(
-        'group relative cursor-pointer overflow-hidden rounded-xl',
-        'border border-white/[0.06] bg-surface-raised',
-        'transition-all duration-300 ease-out',
-        'hover:-translate-y-1 hover:border-white/[0.12] hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)]'
-      )}
-      style={{ animation: `fade-in-up 0.5s ease-out ${index * 0.08}s both` }}
+      className="proto-card"
       onClick={() => onOpen(project)}
+      style={{
+        background: 'var(--color-card)',
+        border: '1px solid var(--color-border)',
+        borderRadius: 14,
+        overflow: 'hidden',
+        cursor: 'pointer',
+        transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+        position: 'relative',
+      }}
     >
-      {/* Gradient overlay on hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-      {/* Thumbnail area */}
-      <div className="relative flex h-32 items-center justify-center border-b border-white/[0.04] bg-white/[0.02]">
-        {project.screenshot_url ? (
-          <img
-            className="h-full w-full object-cover"
-            src={project.screenshot_url}
-            alt={`Screenshot of ${project.title}`}
-            loading="lazy"
-          />
-        ) : (
-          <span className="text-5xl transition-transform duration-300 group-hover:scale-110">
-            {project.emoji || '🧪'}
+      {/* Thumbnail */}
+      <div style={{
+        width: '100%', height: 160, position: 'relative', overflow: 'hidden',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        background: gradient,
+      }}>
+        <span style={{ fontSize: 48, position: 'relative', zIndex: 2 }}>
+          {project.emoji || '🧪'}
+        </span>
+        <div className="thumb-overlay" style={{
+          position: 'absolute', inset: 0, background: 'rgba(0,255,157,0.12)',
+          opacity: 0, transition: 'opacity 0.3s',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          backdropFilter: 'blur(2px)',
+        }}>
+          <span style={{
+            background: 'var(--color-accent)', color: '#000',
+            fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 700,
+            padding: '8px 20px', borderRadius: 999, letterSpacing: '0.05em',
+          }}>
+            ▶ LAUNCH
           </span>
-        )}
-
-        {/* External link hint */}
-        <div className="absolute right-3 top-3 rounded-md bg-black/50 p-1.5 opacity-0 backdrop-blur-sm transition-opacity duration-200 group-hover:opacity-100">
-          <ExternalLink className="h-3.5 w-3.5 text-white/70" />
         </div>
       </div>
 
-      {/* Content */}
-      <div className="relative space-y-3 p-4">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold tracking-tight text-white/90 group-hover:text-white">
+      {/* Body */}
+      <div style={{ padding: '16px 18px 18px' }}>
+        <div style={{
+          display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between',
+          marginBottom: 8,
+        }}>
+          <span style={{ fontSize: 15, fontWeight: 700, letterSpacing: -0.3 }}>
             {project.title}
-          </h3>
-          {project.category && (
-            <span className="shrink-0 rounded-md bg-white/[0.06] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-white/40">
-              {project.category}
-            </span>
-          )}
+          </span>
+          <span className="card-arrow" style={{
+            fontSize: 14, color: 'var(--color-accent)', transition: 'transform 0.2s',
+          }}>
+            ↗
+          </span>
         </div>
 
         {project.description && (
-          <p className="line-clamp-2 text-sm leading-relaxed text-white/40">
+          <p style={{
+            fontSize: 12, color: 'var(--color-muted)', lineHeight: 1.6,
+            marginBottom: 14, fontFamily: 'var(--font-mono)',
+          }}>
             {project.description}
           </p>
         )}
 
-        <div className="flex items-center justify-between pt-1">
-          {project.tags && project.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {project.tags.slice(0, 3).map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-md bg-white/[0.04] px-2 py-0.5 text-[11px] text-white/30 transition-colors group-hover:bg-white/[0.06] group-hover:text-white/40"
-                >
+        {project.tags && project.tags.length > 0 && (
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' as const }}>
+            {project.tags.map((tag, i) => {
+              const s = getTagStyle(i);
+              return (
+                <span key={tag} style={{
+                  fontFamily: 'var(--font-mono)', fontSize: 10, padding: '3px 8px',
+                  borderRadius: 4, background: s.bg, border: `1px solid ${s.border}`,
+                  color: s.color, letterSpacing: '0.03em',
+                }}>
                   {tag}
                 </span>
-              ))}
-            </div>
-          )}
-          <time className="ml-auto text-[11px] text-white/20" dateTime={project.created_at}>
-            {formattedDate}
-          </time>
-        </div>
+              );
+            })}
+          </div>
+        )}
       </div>
+
+      <style>{`
+        .proto-card:hover { border-color: var(--color-accent) !important; transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,255,157,0.08); }
+        .proto-card:hover .thumb-overlay { opacity: 1 !important; }
+        .proto-card:hover .card-arrow { transform: translate(3px, -3px); }
+      `}</style>
     </article>
   );
 }

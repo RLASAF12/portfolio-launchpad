@@ -1,9 +1,7 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
-import { ArrowRight, Check } from 'lucide-react';
 import { supabase } from '../lib/supabase';
-import { cn } from '../lib/utils';
 
 export default function EmailCapture() {
   const [email, setEmail] = useState('');
@@ -41,61 +39,100 @@ export default function EmailCapture() {
   }
 
   return (
-    <section className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-surface-raised p-8 sm:p-12">
-      {/* Subtle gradient glow */}
-      <div className="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-accent/[0.04] blur-[80px]" />
+    <section style={{
+      margin: '60px 0 40px', background: 'var(--color-card)',
+      border: '1px solid var(--color-border)', borderRadius: 20,
+      padding: 48, position: 'relative', overflow: 'hidden',
+    }}>
+      {/* Glow effects */}
+      <div style={{
+        content: '', position: 'absolute', top: -60, right: -60, width: 200, height: 200,
+        background: 'radial-gradient(circle, rgba(124,58,237,0.2) 0%, transparent 70%)',
+        pointerEvents: 'none',
+      }} />
+      <div style={{
+        content: '', position: 'absolute', bottom: -60, left: -60, width: 200, height: 200,
+        background: 'radial-gradient(circle, rgba(0,255,157,0.1) 0%, transparent 70%)',
+        pointerEvents: 'none',
+      }} />
 
-      <div className="relative mx-auto max-w-md text-center">
-        <h2 className="text-lg font-semibold tracking-tight text-white">
-          Get notified when I ship something new
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <div style={{
+          fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-accent)',
+          letterSpacing: '0.15em', textTransform: 'uppercase' as const, marginBottom: 12,
+        }}>
+          {'// join the list'}
+        </div>
+
+        <h2 style={{
+          fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 800,
+          letterSpacing: -0.5, lineHeight: 1.2, marginBottom: 10,
+        }}>
+          Building the <span style={{ color: 'var(--color-accent)' }}>AI Revolution</span>.
+          <br />Want a front-row seat?
         </h2>
-        <p className="mt-2 text-sm text-white/40">
-          No spam. Just a ping when a new prototype goes live.
+
+        <p style={{
+          fontSize: 14, color: 'var(--color-muted)', fontFamily: 'var(--font-mono)',
+          marginBottom: 28, maxWidth: 480, lineHeight: 1.7,
+        }}>
+          Drop your email. Get early access to new prototypes, tools, and the occasional unhinged experiment.
         </p>
 
         {status === 'success' ? (
-          <div className="mt-6 flex items-center justify-center gap-2 rounded-xl border border-green-500/20 bg-green-500/10 px-5 py-3 text-sm text-green-400">
-            <Check className="h-4 w-4" />
-            You're in. I'll ping you when the next one ships.
+          <div style={{
+            fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--color-accent)',
+            background: 'rgba(0,255,157,0.08)', border: '1px solid rgba(0,255,157,0.25)',
+            borderRadius: 10, padding: '12px 20px', display: 'inline-flex', alignItems: 'center', gap: 8,
+          }}>
+            ✓ You&apos;re in. I&apos;ll ping you when the next one ships.
           </div>
         ) : (
-          <form className="mt-6" onSubmit={handleSubmit}>
-            <div className="flex gap-2">
+          <>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 10, maxWidth: 480 }}>
               <input
-                className={cn(
-                  'h-11 flex-1 rounded-xl border bg-white/[0.03] px-4 text-sm text-white placeholder-white/25 outline-none transition-colors',
-                  status === 'error'
-                    ? 'border-red-500/30 focus:border-red-500/50'
-                    : 'border-white/[0.08] focus:border-white/[0.2]'
-                )}
                 type="email"
-                placeholder="you@example.com"
+                placeholder="you@somewhere.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={status === 'submitting'}
+                style={{
+                  flex: 1, background: 'var(--color-surface)',
+                  border: `1px solid ${status === 'error' ? 'var(--color-accent3)' : 'var(--color-border)'}`,
+                  borderRadius: 10, padding: '12px 16px',
+                  color: 'var(--color-text)', fontFamily: 'var(--font-mono)',
+                  fontSize: 13, outline: 'none', transition: 'border-color 0.2s',
+                }}
               />
               <button
-                className="inline-flex h-11 items-center gap-2 rounded-xl bg-white px-5 text-sm font-medium text-black transition-all hover:bg-white/90 disabled:opacity-40"
                 type="submit"
                 disabled={status === 'submitting'}
+                style={{
+                  background: 'var(--color-accent)', border: 'none', borderRadius: 10,
+                  padding: '12px 24px', color: '#000', fontFamily: 'var(--font-mono)',
+                  fontSize: 12, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap',
+                  transition: 'all 0.2s', letterSpacing: '0.05em',
+                }}
               >
-                {status === 'submitting' ? (
-                  'Saving…'
-                ) : (
-                  <>
-                    Notify me
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </>
-                )}
+                {status === 'submitting' ? 'SAVING...' : 'JOIN →'}
               </button>
-            </div>
+            </form>
             {status === 'error' && (
-              <p className="mt-2 text-left text-xs text-red-400/80" role="alert">
+              <p style={{
+                marginTop: 8, fontFamily: 'var(--font-mono)', fontSize: 11,
+                color: 'var(--color-accent3)',
+              }}>
                 {errorMessage}
               </p>
             )}
-          </form>
+            <p style={{
+              marginTop: 10, fontFamily: 'var(--font-mono)', fontSize: 10,
+              color: 'var(--color-muted)',
+            }}>
+              → Saved to Supabase. No spam. Just builds.
+            </p>
+          </>
         )}
       </div>
     </section>

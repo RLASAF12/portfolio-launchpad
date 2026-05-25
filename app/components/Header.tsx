@@ -1,56 +1,109 @@
-import { Podcast } from 'lucide-react';
+import type { Project } from '../lib/types';
 
-export default function Header() {
+interface HeaderProps {
+  projectCount: number;
+}
+
+export default function Header({ projectCount }: HeaderProps) {
   return (
-    <header className="relative border-b border-white/[0.06] bg-surface/80 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-        <div className="flex items-center gap-4">
-          <div>
-            <h1 className="text-xl font-bold tracking-tight text-white">
-              Harel Asaf
+    <header style={{ padding: '32px 0 0' }}>
+      <div style={{
+        display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between',
+        gap: 24, flexWrap: 'wrap' as const,
+      }}>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <h1 style={{
+              fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800,
+              letterSpacing: -1, lineHeight: 1, fontFamily: 'var(--font-syne)',
+            }}>
+              Harel <span style={{ color: 'var(--color-accent)' }}>Asaf</span>
             </h1>
-            <p className="mt-0.5 text-sm text-white/50">
-              Building AI prototypes — one idea per weekend
-            </p>
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              background: 'rgba(0,255,157,0.08)', border: '1px solid rgba(0,255,157,0.3)',
+              borderRadius: 999, padding: '4px 12px',
+              fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-accent)',
+            }}>
+              <div style={{
+                width: 7, height: 7, borderRadius: '50%', background: 'var(--color-accent)',
+                animation: 'pulse 2s infinite',
+              }} />
+              BUILDING
+            </div>
           </div>
-          <span className="ml-2 inline-flex items-center gap-1.5 rounded-full border border-green-500/20 bg-green-500/10 px-2.5 py-0.5 text-xs font-medium text-green-400">
-            <span
-              className="h-1.5 w-1.5 rounded-full bg-green-400"
-              style={{ animation: 'pulse-dot 2s ease-in-out infinite' }}
-            />
-            Shipping
-          </span>
+
+          <p style={{
+            fontSize: 14, color: 'var(--color-muted)', fontFamily: 'var(--font-mono)', marginTop: 6,
+          }}>
+            AI Operator · Legal DNA · <span style={{ color: 'var(--color-accent3)' }}>Elementor</span> · Prototype Pusher
+          </p>
+
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.3)',
+            borderRadius: 8, padding: '6px 12px',
+            fontFamily: 'var(--font-mono)', fontSize: 10, color: '#a78bfa',
+            marginTop: 8,
+          }}>
+            <div style={{
+              width: 6, height: 6, borderRadius: '50%', background: '#a78bfa',
+              animation: 'pulse 1.5s infinite',
+            }} />
+            Ben (agent) · auto-deploying to Vercel
+          </div>
         </div>
 
-        <nav className="flex items-center gap-1" aria-label="External profiles">
-          <a
-            className="rounded-lg p-2 text-white/40 transition-colors hover:bg-white/5 hover:text-white/80"
-            href="https://github.com/RLASAF12"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-          >
-            <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          </a>
-          <a
-            className="rounded-lg p-2 text-white/40 transition-colors hover:bg-white/5 hover:text-white/80"
-            href="https://linkedin.com/in/harel-asaf"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-          >
-            <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </a>
-          <a
-            className="rounded-lg p-2 text-white/40 transition-colors hover:bg-white/5 hover:text-white/80"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Podcast"
-          >
-            <Podcast className="h-[18px] w-[18px]" />
-          </a>
+        <nav style={{ display: 'flex', gap: 12, alignItems: 'center', marginTop: 4 }}>
+          {[
+            { label: 'GitHub', href: 'https://github.com/RLASAF12' },
+            { label: 'LinkedIn', href: 'https://www.linkedin.com/in/harel-asaf' },
+            { label: 'Podcast', href: '#' },
+          ].map((link) => (
+            <a
+              key={link.label}
+              className="nav-link-btn"
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--color-muted)',
+                textDecoration: 'none', border: '1px solid var(--color-border)', borderRadius: 6,
+                padding: '6px 14px', transition: 'all 0.2s',
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
         </nav>
+      </div>
+
+      {/* Stats bar */}
+      <div style={{
+        display: 'flex', gap: 32, marginTop: 28, padding: '20px 0',
+        borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)',
+        flexWrap: 'wrap' as const,
+      }}>
+        {[
+          { num: String(projectCount), label: 'Prototypes Live' },
+          { num: '3', label: 'Agent Builders' },
+          { num: '∞', label: 'Iterations' },
+          { num: '1', label: 'DB · Supabase' },
+        ].map((stat) => (
+          <div key={stat.label} style={{ display: 'flex', flexDirection: 'column' as const, gap: 4 }}>
+            <span style={{
+              fontSize: 28, fontWeight: 800, color: 'var(--color-accent)', letterSpacing: -1,
+            }}>
+              {stat.num}
+            </span>
+            <span style={{
+              fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--color-muted)',
+              letterSpacing: '0.1em', textTransform: 'uppercase' as const,
+            }}>
+              {stat.label}
+            </span>
+          </div>
+        ))}
       </div>
     </header>
   );
