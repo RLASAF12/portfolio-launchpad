@@ -6,15 +6,14 @@ export default function Footer() {
       flexWrap: 'wrap' as const, gap: 12,
     }}>
       <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-muted)' }}>
-        Built by <span style={{ color: 'var(--color-accent)' }}>Harel Asaf</span> · Deployed by{' '}
-        <span style={{ color: 'var(--color-accent)' }}>Ben</span> · Powered by Vercel + Supabase
+        Built by <span style={{ color: 'var(--color-accent)' }}>Harel Asaf</span> · Powered by Vercel + Supabase
       </div>
       <div style={{ display: 'flex', gap: 16, fontFamily: 'var(--font-mono)', fontSize: 11 }}>
         {[
           { label: 'GitHub', href: 'https://github.com/RLASAF12' },
-          { label: 'LinkedIn', href: 'https://www.linkedin.com/in/harel-asaf' },
-          { label: 'Podcast', href: '#' },
-          { label: 'Contact', href: '#' },
+          { label: 'LinkedIn', href: 'https://www.linkedin.com/in/harel-asaf/' },
+          { label: 'Podcast', href: 'https://open.spotify.com/show/2qHIo535AiDzlKouPRa7QI?si=68c3675a0c8449b7' },
+          { label: 'YouTube', href: 'https://www.youtube.com/@harelasaf7' },
         ].map((link) => (
           <a
             key={link.label}
