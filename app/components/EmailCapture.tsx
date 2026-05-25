@@ -39,7 +39,7 @@ export default function EmailCapture() {
   }
 
   return (
-    <section style={{
+    <section className="email-section" style={{
       margin: '60px 0 40px', background: 'var(--color-card)',
       border: '1px solid var(--color-border)', borderRadius: 20,
       padding: 48, position: 'relative', overflow: 'hidden',
@@ -89,7 +89,7 @@ export default function EmailCapture() {
           </div>
         ) : (
           <>
-            <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 10, maxWidth: 480 }}>
+            <form onSubmit={handleSubmit} className="email-form" style={{ display: 'flex', gap: 10, maxWidth: 480 }}>
               <input
                 type="email"
                 placeholder="you@somewhere.com"

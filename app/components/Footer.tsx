@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer style={{
+    <footer className="site-footer" style={{
       borderTop: '1px solid var(--color-border)', padding: '28px 0 36px',
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       flexWrap: 'wrap' as const, gap: 12,

@@ -30,7 +30,7 @@ export default function PrototypeGrid({ projects }: PrototypeGridProps) {
           No prototypes in this category yet.
         </div>
       ) : (
-        <div style={{
+        <div className="card-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
           gap: 20,

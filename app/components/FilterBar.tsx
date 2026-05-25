@@ -10,7 +10,7 @@ interface FilterBarProps {
 
 export default function FilterBar({ activeCategory, onFilterChange }: FilterBarProps) {
   return (
-    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' as const, marginBottom: 28 }}>
+    <div className="filter-bar" style={{ display: 'flex', gap: 8, flexWrap: 'wrap' as const, marginBottom: 28 }}>
       {PROJECT_CATEGORIES.map(({ value, label }) => (
         <button
           key={value}

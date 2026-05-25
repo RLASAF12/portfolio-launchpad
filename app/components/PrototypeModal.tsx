@@ -43,22 +43,22 @@ export default function PrototypeModal({ project, onClose }: PrototypeModalProps
         backdropFilter: 'blur(8px)',
       }}
     >
-      <div style={{
+      <div className="modal-panel" style={{
         background: 'var(--color-card)', border: '1px solid var(--color-border)',
         borderRadius: 20, width: '90vw', maxWidth: 900, height: '80vh',
         display: 'flex', flexDirection: 'column', overflow: 'hidden',
         animation: 'slide-up 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
       }}>
         {/* Header */}
-        <div style={{
+        <div className="modal-header" style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           padding: '16px 20px', borderBottom: '1px solid var(--color-border)', flexShrink: 0,
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <span style={{ fontSize: 24 }}>{project.emoji}</span>
-            <span style={{ fontSize: 16, fontWeight: 700 }}>{project.title}</span>
+            <span className="modal-header-title" style={{ fontSize: 16, fontWeight: 700 }}>{project.title}</span>
             {domain && (
-              <span style={{
+              <span className="modal-domain-badge" style={{
                 fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-accent)',
                 background: 'rgba(0,255,157,0.08)', border: '1px solid rgba(0,255,157,0.2)',
                 padding: '3px 10px', borderRadius: 4,

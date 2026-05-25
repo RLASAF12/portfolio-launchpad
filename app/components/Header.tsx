@@ -7,7 +7,7 @@ interface HeaderProps {
 export default function Header({ projectCount }: HeaderProps) {
   return (
     <header style={{ padding: '32px 0 0' }}>
-      <div style={{
+      <div className="header-top" style={{
         display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between',
         gap: 24, flexWrap: 'wrap' as const,
       }}>
@@ -54,7 +54,7 @@ export default function Header({ projectCount }: HeaderProps) {
           </div>
         </div>
 
-        <nav style={{ display: 'flex', gap: 12, alignItems: 'center', marginTop: 4 }}>
+        <nav className="header-nav" style={{ display: 'flex', gap: 12, alignItems: 'center', marginTop: 4 }}>
           {[
             { label: 'GitHub', href: 'https://github.com/RLASAF12' },
             { label: 'LinkedIn', href: 'https://www.linkedin.com/in/harel-asaf' },
@@ -79,7 +79,7 @@ export default function Header({ projectCount }: HeaderProps) {
       </div>
 
       {/* Stats bar */}
-      <div style={{
+      <div className="stats-bar" style={{
         display: 'flex', gap: 32, marginTop: 28, padding: '20px 0',
         borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)',
         flexWrap: 'wrap' as const,
@@ -91,7 +91,7 @@ export default function Header({ projectCount }: HeaderProps) {
           { num: '1', label: 'DB · Supabase' },
         ].map((stat) => (
           <div key={stat.label} style={{ display: 'flex', flexDirection: 'column' as const, gap: 4 }}>
-            <span style={{
+            <span className="stat-num" style={{
               fontSize: 28, fontWeight: 800, color: 'var(--color-accent)', letterSpacing: -1,
             }}>
               {stat.num}

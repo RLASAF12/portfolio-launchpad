@@ -32,11 +32,11 @@ export default async function HomePage() {
   const projects = await getProjects();
 
   return (
-    <div style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
+    <div className="page-container" style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
       <Header projectCount={projects.length} />
 
       {/* Section label */}
-      <div style={{
+      <div className="section-label" style={{
         display: 'flex', alignItems: 'center', gap: 12, margin: '48px 0 24px',
       }}>
         <span style={{
