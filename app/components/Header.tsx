@@ -58,7 +58,6 @@ export default function Header({ projectCount }: HeaderProps) {
           {[
             { label: 'GitHub', href: 'https://github.com/RLASAF12' },
             { label: 'LinkedIn', href: 'https://www.linkedin.com/in/harel-asaf' },
-            { label: 'Podcast', href: '#' },
           ].map((link) => (
             <a
               key={link.label}
