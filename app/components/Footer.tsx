@@ -14,6 +14,7 @@ export default function Footer() {
           { label: 'LinkedIn', href: 'https://www.linkedin.com/in/harel-asaf/' },
           { label: 'Podcast', href: 'https://open.spotify.com/show/2qHIo535AiDzlKouPRa7QI?si=68c3675a0c8449b7' },
           { label: 'YouTube', href: 'https://www.youtube.com/@harelasaf7' },
+          { label: 'X', href: 'https://x.com/RL_Asaf' },
         ].map((link) => (
           <a
             key={link.label}
