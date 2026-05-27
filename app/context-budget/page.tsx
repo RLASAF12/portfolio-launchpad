@@ -1,8 +1,10 @@
 'use client';
+import SubpageNav from '../components/SubpageNav';
 
 export default function ContextBudgetPage() {
   return (
     <>
+      <SubpageNav title="Context Budget" />
       <style>{`
         .cb-page {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
